@@ -27,7 +27,7 @@ def bfs(grafo, inicio, objetivos):
 
     return None
 
-# Exemplo de utilização
+
 if __name__ == "__main__":
     grafo = {
         '6': ['1', '9', '7'],
@@ -57,3 +57,4 @@ if __name__ == "__main__":
 
     if not caminho_objetivo:
         print("Não há caminho para nenhum dos objetivos a partir do nó inicial.")
+
