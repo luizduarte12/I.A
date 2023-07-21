@@ -51,7 +51,7 @@ if __name__ == "__main__":
     }
 
     inicio = '6'
-    objetivos = ['18', '14']
+    objetivos = ['14', '18']
 
     caminho_objetivo = bfs(grafo, inicio, objetivos)
 
