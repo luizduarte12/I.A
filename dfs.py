@@ -1,12 +1,10 @@
-from collections import deque
-
-def bfs(grafo, inicio, objetivos):
-    fila = deque([(inicio, [inicio])])
+def dfs(grafo, inicio, objetivos):
+    pilha = [(inicio, [inicio])]
     profundidade = {inicio: 0}
     ramificacao = {inicio: 0}
 
-    while fila:
-        no_atual, caminho = fila.popleft()
+    while pilha:
+        no_atual, caminho = pilha.pop()
 
         if no_atual in objetivos:
             custo = len(caminho) - 1
@@ -21,11 +19,11 @@ def bfs(grafo, inicio, objetivos):
 
         for vizinho in grafo[no_atual]:
             if vizinho not in caminho:
-                fila.append((vizinho, caminho + [vizinho]))
+                pilha.append((vizinho, caminho + [vizinho]))
                 profundidade[vizinho] = profundidade[no_atual] + 1
                 ramificacao[vizinho] = len(grafo[vizinho])
-    return None
 
+    return None
 
 if __name__ == "__main__":
     grafo = {
@@ -52,7 +50,7 @@ if __name__ == "__main__":
     inicio = '6'
     objetivos = ['14', '18']
 
-    caminho_objetivo = bfs(grafo, inicio, objetivos)
+    caminho_objetivo = dfs(grafo, inicio, objetivos)
+
     if not caminho_objetivo:
         print("Não há caminho para nenhum dos objetivos a partir do nó inicial.")
-

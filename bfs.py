@@ -13,6 +13,7 @@ def bfs(grafo, inicio, objetivo):
             if vizinho not in caminho:
                 fila.append((vizinho, caminho + [vizinho]))
 
+
     return None
 
 # Exemplos de utilização
