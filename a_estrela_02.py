@@ -64,7 +64,7 @@ if __name__ == "__main__":
     }
 
     no_inicio = '6'
-    nos_objetivo = ['14', '18']
+    nos_objetivo = ['18', '14']
 
     caminho, custo = a_estrela(grafo, no_inicio, nos_objetivo)
 

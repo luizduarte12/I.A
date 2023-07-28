@@ -48,7 +48,7 @@ if __name__ == "__main__":
     }
 
     inicio = '6'
-    objetivos = ['14', '18']
+    objetivos = ['18', '14']
 
     caminho_objetivo = dfs(grafo, inicio, objetivos)
 
