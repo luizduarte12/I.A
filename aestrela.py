@@ -47,7 +47,7 @@ if __name__ == "__main__":
     }
 
     inicio = (0, 0)  # Nó inicial
-    objetivos = [(1, 4), (2, 2)]  # Nós objetivos
+    objetivos = [(2, 2), (1, 4)]  # Nós objetivos
 
     resultado, custo_acumulado = astar(grafo, inicio, objetivos)
 

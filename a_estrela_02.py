@@ -10,6 +10,8 @@ def a_estrela(grafo, no_inicio, nos_objetivo):
     visitados = set()
     custo_acumulado = {no_inicio: 0}
     caminho_anterior = {no_inicio: None}
+    profundidade = {no_inicio: 0}
+    ramificacao = {no_inicio: 0}
 
     while fila_prioridade:
         (custo_atual, no_atual) = heapq.heappop(fila_prioridade)
@@ -21,6 +23,12 @@ def a_estrela(grafo, no_inicio, nos_objetivo):
 
         if no_atual in nos_objetivo:
             caminho = reconstituir_caminho(caminho_anterior, no_atual)
+            profundidade_objetivo = len(caminho) - 1
+            ramificacao_objetivo = len(grafo[no_atual])
+            print(f"Caminho para o objetivo (nó '{no_atual}'): {caminho}")
+            print(f"Profundidade do objetivo: {profundidade_objetivo}")
+            print(f"Ramificação máxima: {ramificacao_objetivo}")
+            print(f"Ramificação média: {sum(ramificacao.values()) / len(ramificacao):.2f}")
             return caminho, custo_acumulado[no_atual]
 
         for vizinho, custo in grafo[no_atual].items():
@@ -31,6 +39,8 @@ def a_estrela(grafo, no_inicio, nos_objetivo):
                     custo_total = novo_custo + distancia_manhattan(vizinho, nos_objetivo[0])
                     heapq.heappush(fila_prioridade, (custo_total, vizinho))
                     caminho_anterior[vizinho] = no_atual
+                    profundidade[vizinho] = profundidade[no_atual] + 1
+                    ramificacao[vizinho] = len(grafo[vizinho])
 
     return None, None
 
