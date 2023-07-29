@@ -4,6 +4,7 @@ def bfs(grafo, inicio, objetivos):
     fila = deque([(inicio, [inicio])])
     profundidade = {inicio: 0}
     ramificacao = {inicio: 0}
+    explorados = set()
 
     while fila:
         no_atual, caminho = fila.popleft()
@@ -17,6 +18,7 @@ def bfs(grafo, inicio, objetivos):
             print(f"Profundidade do objetivo: {profundidade_objetivo}")
             print(f"Ramificação máxima: {ramificacao_objetivo}")
             print(f"Ramificação média: {sum(ramificacao.values()) / len(ramificacao):.2f}")
+            print(f"Nós explorados: {explorados}")
             return caminho
 
         for vizinho in grafo[no_atual]:
@@ -24,6 +26,7 @@ def bfs(grafo, inicio, objetivos):
                 fila.append((vizinho, caminho + [vizinho]))
                 profundidade[vizinho] = profundidade[no_atual] + 1
                 ramificacao[vizinho] = len(grafo[vizinho])
+                explorados.add(vizinho)
     return None
 
 
