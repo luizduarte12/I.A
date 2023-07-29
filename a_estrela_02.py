@@ -24,7 +24,7 @@ def a_estrela(grafo, no_inicio, nos_objetivo):
         if no_atual in nos_objetivo:
             caminho = reconstituir_caminho(caminho_anterior, no_atual)
             profundidade_objetivo = len(caminho) - 1
-            ramificacao_objetivo = len(grafo[no_atual])
+            ramificacao_objetivo = len(grafo[vizinho])
             print(f"Caminho para o objetivo (nó '{no_atual}'): {caminho}")
             print(f"Profundidade do objetivo: {profundidade_objetivo}")
             print(f"Ramificação máxima: {ramificacao_objetivo}")
@@ -56,7 +56,7 @@ if __name__ == "__main__":
         '6': {'1': 2, '9': 2, '7': 2},
         '1': {'2': 2, '6': 2},
         '9': {'10': 2, '6': 2},
-        '7': {'10': 2, '2': 2, '6': 2},
+        '7': {'2': 2, '6': 2, '10': 2},
         '2': {'3': 2, '7': 2, '1': 2},
         '10': {'9': 2, '7': 2},
         '3': {'2': 2, '4': 2},

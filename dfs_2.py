@@ -10,7 +10,7 @@ def dfs(grafo, inicio, objetivos):
         if no_atual in objetivos:
             custo = len(caminho) - 1
             profundidade_objetivo = len(caminho) - 1
-            ramificacao_objetivo = len(grafo[no_atual])
+            ramificacao_objetivo = len(grafo[vizinho])
             print(f"Caminho para o objetivo (nó '{no_atual}'): {caminho}")
             print(f"Custo da solução: {custo}")
             print(f"Profundidade do objetivo: {profundidade_objetivo}")
