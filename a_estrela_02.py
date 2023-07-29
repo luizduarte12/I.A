@@ -1,8 +1,8 @@
 import heapq
 
 def distancia_manhattan(no1, no2):
-    x1, y1 = int(no1), 0  # Para simplificar, definimos as coordenadas x e y como apenas o valor do nó.
-    x2, y2 = int(no2), 0  # Como o grafo é unidimensional, y será sempre 0.
+    x1, y1 = int(no1), 0
+    x2, y2 = int(no2), 0 
     return abs(x1 - x2) + abs(y1 - y2)
 
 def a_estrela(grafo, no_inicio, nos_objetivo):
@@ -12,6 +12,7 @@ def a_estrela(grafo, no_inicio, nos_objetivo):
     caminho_anterior = {no_inicio: None}
     profundidade = {no_inicio: 0}
     ramificacao = {no_inicio: 0}
+    explorados = []
 
     while fila_prioridade:
         (custo_atual, no_atual) = heapq.heappop(fila_prioridade)
@@ -29,6 +30,7 @@ def a_estrela(grafo, no_inicio, nos_objetivo):
             print(f"Profundidade do objetivo: {profundidade_objetivo}")
             print(f"Ramificação máxima: {ramificacao_objetivo}")
             print(f"Ramificação média: {sum(ramificacao.values()) / len(ramificacao):.2f}")
+            print(f"Nós explorados: {explorados}")
             return caminho, custo_acumulado[no_atual]
 
         for vizinho, custo in grafo[no_atual].items():
@@ -41,6 +43,7 @@ def a_estrela(grafo, no_inicio, nos_objetivo):
                     caminho_anterior[vizinho] = no_atual
                     profundidade[vizinho] = profundidade[no_atual] + 1
                     ramificacao[vizinho] = len(grafo[vizinho])
+                    explorados.append(vizinho)
 
     return None, None
 

@@ -2,7 +2,7 @@ def dfs(grafo, inicio, objetivos):
     pilha = [(inicio, [inicio])]
     profundidade = {inicio: 0}
     ramificacao = {inicio: 0}
-    explorados = set()
+    explorados = []
 
     while pilha:
         no_atual, caminho = pilha.pop()
@@ -10,11 +10,11 @@ def dfs(grafo, inicio, objetivos):
         if no_atual in objetivos:
             custo = len(caminho) - 1
             profundidade_objetivo = len(caminho) - 1
-            ramificacao_objetivo = len(grafo[vizinho])
+            ##ramificacao_objetivo = len(grafo[vizinho])
             print(f"Caminho para o objetivo (nó '{no_atual}'): {caminho}")
             print(f"Custo da solução: {custo}")
             print(f"Profundidade do objetivo: {profundidade_objetivo}")
-            print(f"Ramificação máxima: {ramificacao_objetivo}")
+            print("Ramificação máxima:", max(len(grafo[no]) for no in grafo))
             print(f"Ramificação média: {sum(ramificacao.values()) / len(ramificacao):.2f}")
             print(f"Nós explorados: {explorados}")
             return caminho
@@ -24,7 +24,7 @@ def dfs(grafo, inicio, objetivos):
                 pilha.append((vizinho, caminho + [vizinho]))
                 profundidade[vizinho] = profundidade[no_atual] + 1
                 ramificacao[vizinho] = len(grafo[vizinho])
-                explorados.add(vizinho)
+                explorados.append(vizinho)
 
     return None
 
@@ -33,7 +33,7 @@ if __name__ == "__main__":
         '6': ['9', '7', '1'],
         '1': ['2', '6'],
         '9': ['10', '6'],
-        '7': ['10', '2', '6'],
+        '7': ['10', '6', '2'],
         '2': ['3', '7', '1'],
         '10': ['9', '7'],
         '3': ['2', '4'],
