@@ -3,7 +3,7 @@ def manhattan_heuristica(p1, p2):
     return abs(p2[0] - p1[0]) + abs(p2[1] - p1[1])
 def a_estrela(grafo, inicio, objetivos):
     fila = [(0, inicio)]
-    visitados = set()
+    explorados = set()
     caminho_anterior = {}
     custos = {nodo: float('inf') for nodo in grafo}
     custos[inicio] = 0
@@ -11,9 +11,9 @@ def a_estrela(grafo, inicio, objetivos):
 
     while fila:
         atual_custo, no_atual = heapq.heappop(fila)
-        if no_atual in visitados:
+        if no_atual in explorados:
             continue
-        visitados.add(no_atual)
+        explorados.add(no_atual)
 
         if no_atual in objetivos:
             caminho = [no_atual]
@@ -29,7 +29,7 @@ def a_estrela(grafo, inicio, objetivos):
             ramificacao_media = sum(ramificacao.values()) / len(ramificacao)
             print(f"Caminho para o objetivo encontrado: {caminho}")
             print(f"Custo acumulado do caminho: {custo_acumulado}")
-            print(f"Nós explorados: {visitados}")
+            print(f"Nós explorados: {explorados}")
             print(f"Profundidade do caminho: {profundidade}")
             print(f"Ramificação máxima: {max(ramificacao.values())}")
             print(f"Ramificação média: {ramificacao_media:.2f}")
