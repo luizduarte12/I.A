@@ -43,11 +43,7 @@ def a_estrela(grafo, inicio, objetivos):
                 vizinho))
                 caminho_anterior[vizinho] = no_atual
                 ramificacao[no_atual] += 1
-
-
     return None
-
-
 
 if __name__ == "__main__":
     grafo = {
