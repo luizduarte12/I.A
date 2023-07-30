@@ -27,6 +27,7 @@ def a_estrela(grafo, inicio, objetivos):
             caminho.reverse()
             profundidade = len(caminho) - 1
             ramificacao_media = sum(ramificacao.values()) / len(ramificacao)
+            ##ramificacao_objetivo = len(grafo[vizinho])
             print(f"Caminho para o objetivo encontrado: {caminho}")
             print(f"Custo acumulado do caminho: {custo_acumulado}")
             print(f"Nós explorados: {explorados}")
