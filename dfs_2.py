@@ -19,7 +19,7 @@ def dfs(grafo, inicio, objetivos):
             print(f"Nós explorados: {explorados}")
             return caminho
 
-        for vizinho in grafo[no_atual]:
+        for vizinho in reversed(grafo[no_atual]):
             if vizinho not in caminho:
                 pilha.append((vizinho, caminho + [vizinho]))
                 profundidade[vizinho] = profundidade[no_atual] + 1
@@ -30,19 +30,19 @@ def dfs(grafo, inicio, objetivos):
 
 if __name__ == "__main__":
     grafo = {
-        '6': ['9', '7', '1'],
+        '6': ['1', '7', '9'],
         '1': ['2', '6'],
-        '9': ['10', '6'],
-        '7': ['10', '6', '2'],
+        '9': ['6', '10'],
+        '7': ['6', '2', '10'],
         '2': ['3', '7', '1'],
         '10': ['9', '7'],
         '3': ['2', '4'],
         '4': ['5', '8', '3'],
         '5': ['4'],
-        '8': ['11', '4'],
-        '11': ['12', '13', '8'],
+        '8': ['4', '11'],
+        '11': ['8', '12', '13'],
         '12': ['11'],
-        '13': ['17', '11'],
+        '13': ['11', '17'],
         '17': ['13', '16', '18'],
         '16': ['15', '17'],
         '15': ['14', '16'],

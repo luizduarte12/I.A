@@ -25,10 +25,10 @@ def a_estrela(grafo, no_inicio, nos_objetivo):
         if no_atual in nos_objetivo:
             caminho = reconstituir_caminho(caminho_anterior, no_atual)
             profundidade_objetivo = len(caminho) - 1
-            ramificacao_objetivo = len(grafo[vizinho])
+            ##ramificacao_objetivo = len(grafo[vizinho])
             print(f"Caminho para o objetivo (nó '{no_atual}'): {caminho}")
             print(f"Profundidade do objetivo: {profundidade_objetivo}")
-            print(f"Ramificação máxima: {ramificacao_objetivo}")
+            print("Ramificação máxima:", max(len(grafo[no]) for no in grafo))
             print(f"Ramificação média: {sum(ramificacao.values()) / len(ramificacao):.2f}")
             print(f"Nós explorados: {explorados}")
             return caminho, custo_acumulado[no_atual]
@@ -56,20 +56,20 @@ def reconstituir_caminho(caminho_anterior, no):
 
 if __name__ == "__main__":
     grafo = {
-        '6': {'1': 2, '9': 2, '7': 2},
+        '6': {'1': 2, '7': 2, '9': 2},
         '1': {'2': 2, '6': 2},
-        '9': {'10': 2, '6': 2},
+        '9': {'6': 2, '10': 2},
         '7': {'2': 2, '6': 2, '10': 2},
-        '2': {'3': 2, '7': 2, '1': 2},
-        '10': {'9': 2, '7': 2},
+        '2': {'1': 2, '3': 2, '7': 2},
+        '10': {'7': 2, '9': 2},
         '3': {'2': 2, '4': 2},
-        '4': {'5': 2, '8': 2, '3': 2},
+        '4': {'3': 2, '5': 2, '8': 2},
         '5': {'4': 2},
-        '8': {'11': 2, '4': 2},
-        '11': {'12': 2, '13': 2, '8': 2},
+        '8': {'4': 2, '11': 2},
+        '11': {'8': 2, '12': 2, '13': 2},
         '12': {'11': 2},
-        '13': {'17': 2, '11': 2},
-        '17': {'18': 4, '16': 2, '13': 2},
+        '13': {'11': 2, '17': 2},
+        '17': {'13': 4, '16': 2, '18': 2},
         '16': {'15': 2, '17': 2},
         '15': {'14': 2, '16': 2},
         '14': {'15': 2},
