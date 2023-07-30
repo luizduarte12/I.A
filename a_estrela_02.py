@@ -5,9 +5,9 @@ def a_estrela(grafo, inicio, objetivos):
     fila = [(0, inicio)]
     explorados = set()
     caminho_anterior = {}
-    custos = {nodo: float('inf') for nodo in grafo}
+    custos = {no: float('inf') for no in grafo}
     custos[inicio] = 0
-    ramificacao = {nodo: 0 for nodo in grafo}
+    ramificacao = {no: 0 for no in grafo}
 
     while fila:
         atual_custo, no_atual = heapq.heappop(fila)
