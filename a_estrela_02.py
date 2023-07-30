@@ -1,88 +1,81 @@
 import heapq
-
-def distancia_manhattan(no1, no2):
-    x1, y1 = int(no1), 0
-    x2, y2 = int(no2), 0 
-    return abs(x1 - x2) + abs(y1 - y2)
-
-def a_estrela(grafo, no_inicio, nos_objetivo):
-    fila_prioridade = [(0, no_inicio)]
+def manhattan_heuristica(p1, p2):
+    return abs(p2[0] - p1[0]) + abs(p2[1] - p1[1])
+def a_estrela(grafo, inicio, objetivos):
+    fila = [(0, inicio)]
     visitados = set()
-    custo_acumulado = {no_inicio: 0}
-    caminho_anterior = {no_inicio: None}
-    profundidade = {no_inicio: 0}
-    ramificacao = {no_inicio: 0}
-    explorados = []
+    caminho_anterior = {}
+    custos = {nodo: float('inf') for nodo in grafo}
+    custos[inicio] = 0
+    ramificacao = {nodo: 0 for nodo in grafo}
 
-    while fila_prioridade:
-        (custo_atual, no_atual) = heapq.heappop(fila_prioridade)
-
+    while fila:
+        atual_custo, no_atual = heapq.heappop(fila)
         if no_atual in visitados:
             continue
-
         visitados.add(no_atual)
 
-        if no_atual in nos_objetivo:
-            caminho = reconstituir_caminho(caminho_anterior, no_atual)
-            profundidade_objetivo = len(caminho) - 1
-            ##ramificacao_objetivo = len(grafo[vizinho])
-            print(f"Caminho para o objetivo (nó '{no_atual}'): {caminho}")
-            print(f"Profundidade do objetivo: {profundidade_objetivo}")
-            print("Ramificação máxima:", max(len(grafo[no]) for no in grafo))
-            print(f"Ramificação média: {sum(ramificacao.values()) / len(ramificacao):.2f}")
-            print(f"Nós explorados: {explorados}")
-            return caminho, custo_acumulado[no_atual]
+        if no_atual in objetivos:
+            caminho = [no_atual]
+            custo_acumulado = 0
+            while no_atual in caminho_anterior:
+                pai = caminho_anterior[no_atual]
+                caminho.append(pai)
+                custo_acumulado += grafo[pai]['arestas'][no_atual]
+                no_atual = pai
 
-        for vizinho, custo in grafo[no_atual].items():
-            if vizinho not in visitados:
-                novo_custo = custo_acumulado[no_atual] + custo
-                if vizinho not in custo_acumulado or novo_custo < custo_acumulado[vizinho]:
-                    custo_acumulado[vizinho] = novo_custo
-                    custo_total = novo_custo + distancia_manhattan(vizinho, nos_objetivo[0])
-                    heapq.heappush(fila_prioridade, (custo_total, vizinho))
-                    caminho_anterior[vizinho] = no_atual
-                    profundidade[vizinho] = profundidade[no_atual] + 1
-                    ramificacao[vizinho] = len(grafo[vizinho])
-                    explorados.append(vizinho)
+            caminho.reverse()
+            profundidade = len(caminho) - 1
+            ramificacao_media = sum(ramificacao.values()) / len(ramificacao)
+            print(f"Caminho para o objetivo encontrado: {caminho}")
+            print(f"Custo acumulado do caminho: {custo_acumulado}")
+            print(f"Nós explorados: {visitados}")
+            print(f"Profundidade do caminho: {profundidade}")
+            print(f"Ramificação máxima: {max(ramificacao.values())}")
+            print(f"Ramificação média: {ramificacao_media:.2f}")
+            return caminho
 
-    return None, None
+        for vizinho, custo_aresta in grafo[no_atual]['arestas'].items():
+            novo_custo = custos[no_atual] + custo_aresta
+            if novo_custo < custos[vizinho]:
+                custos[vizinho] = novo_custo
+                heapq.heappush(fila, (novo_custo + manhattan_heuristica(grafo[vizinho]['coordenadas'], grafo[objetivos[0]]['coordenadas']),
+                vizinho))
+                caminho_anterior[vizinho] = no_atual
+                ramificacao[no_atual] += 1
 
-def reconstituir_caminho(caminho_anterior, no):
-    caminho = []
-    while no is not None:
-        caminho.insert(0, no)
-        no = caminho_anterior[no]
-    return caminho
+
+    return None
+
+
 
 if __name__ == "__main__":
     grafo = {
-        '6': {'1': 2, '7': 2, '9': 2},
-        '1': {'2': 2, '6': 2},
-        '9': {'6': 2, '10': 2},
-        '7': {'2': 2, '6': 2, '10': 2},
-        '2': {'1': 2, '3': 2, '7': 2},
-        '10': {'7': 2, '9': 2},
-        '3': {'2': 2, '4': 2},
-        '4': {'3': 2, '5': 2, '8': 2},
-        '5': {'4': 2},
-        '8': {'4': 2, '11': 2},
-        '11': {'8': 2, '12': 2, '13': 2},
-        '12': {'11': 2},
-        '13': {'11': 2, '17': 2},
-        '17': {'13': 4, '16': 2, '18': 2},
-        '16': {'15': 2, '17': 2},
-        '15': {'14': 2, '16': 2},
-        '14': {'15': 2},
-        '18': {'17': 4}
+        '6': {'coordenadas': (0, 0), 'arestas': {'1': 2, '7': 2, '9': 2}},
+        '1': {'coordenadas': (1, 0), 'arestas': {'2': 2}},
+        '9': {'coordenadas': (0, 1), 'arestas': {'10': 2}},
+        '7': {'coordenadas': (1, 1), 'arestas': {'10': 2, '2': 2}},
+        '2': {'coordenadas': (2, 1), 'arestas': {'3': 2}},
+        '10': {'coordenadas': (1, 2), 'arestas': {}},
+        '3': {'coordenadas': (3, 1), 'arestas': {'4': 2}},
+        '4': {'coordenadas': (4, 1), 'arestas': {'5': 2, '8': 2}},
+        '5': {'coordenadas': (5, 1), 'arestas': {}},
+        '8': {'coordenadas': (3, 2), 'arestas': {'11': 2}},
+        '11': {'coordenadas': (3, 3), 'arestas': {'12': 2, '13': 2}},
+        '12': {'coordenadas': (3, 4), 'arestas': {}},
+        '13': {'coordenadas': (4, 3), 'arestas': {'17': 2}},
+        '17': {'coordenadas': (4, 4), 'arestas': {'18': 4, '16': 2}},
+        '16': {'coordenadas': (5, 4), 'arestas': {'15': 2}},
+        '15': {'coordenadas': (5, 3), 'arestas': {'14': 2}},
+        '14': {'coordenadas': (6, 3), 'arestas': {}},
+        '18': {'coordenadas': (5, 5), 'arestas': {}}
     }
 
-    no_inicio = '6'
-    nos_objetivo = ['18', '14']
 
-    caminho, custo = a_estrela(grafo, no_inicio, nos_objetivo)
+    inicio = '6'
+    objetivos = ['18', '14']
 
-    if caminho and custo is not None:
-        print(f"Caminho encontrado: {caminho}")
-        print(f"Custo acumulado da solução: {custo}")
-    else:
-        print("Não foi possível encontrar um caminho até o nó objetivo.")
+    caminho_objetivo = a_estrela(grafo, inicio, objetivos)
+
+    if not caminho_objetivo:
+        print("Não há caminho para nenhum dos objetivos a partir do nó inicial.")
