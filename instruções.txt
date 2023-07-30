@@ -1,0 +1,23 @@
+Para iniciar deve-se descompactar o arquivo.zip, este arquivo quando descompactado vai dar acesso a uma pasta.
+
+Criar então um ambiente virtual python para executar os programas, pode abrir a pasta que estava no arquivo compactado  como um projeto, usando o compilador de sua preferência.
+
+Basta carregar o ambiente virtual e esperar a indexação, lembrando que os códigos foram feitos para rodar em Python 3.10 ou superior.
+
+Em caso de erro com alguma biblioteca, pode-se utilizar o terminal do ambiente virtual para a instalação manual das bibliotecas, utilizando os comandos:
+
+pip install collections
+pip install heapq
+
+Ambas as bibliotecas são nativas do Python, porém esse comandos podem ser executados para instalá-las manualmente se necessário.
+
+Se tudo estiver correto, basta executar os códigos bfs_2.py, dfs_2.py  e a_estrela_ 02.py , utilizando o compilador, executar um de cada vez.
+
+As saídas esperadas para os códigos são de forma geral:
+
+-Uma ou duas listas com o caminho encontrado pelos algoritmos
+- Custo da solução em nós
+- Uma lista com os nós que foram explorados pelos algoritmos
+- Profundidade, ramificação máxima e mínima da árvore gerada.
+-O algoritmo a* vai mostrar também o custo acumulado da solução.
+
